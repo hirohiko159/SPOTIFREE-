@@ -19,18 +19,17 @@ class Bdd():
 
         self.cursor= self.connection.cursor()
 
-    def affichage(reponse):
+    def affichage(self, reponse):
         for line in reponse:
           print (" | ".join(line))
 
     def verificationUtilisateur(self,username,password):
-        sql="SELECT nom_user FROM user WHERE nom_user='username' AND pwd='password';"
-        print("test", self.cursor)
-        self.cursor.execute(sql)
-        data=self.cursor.fetchall()
-        if data != username:
-            return False
-        return True
+        sql="SELECT nom_user FROM user Where nom_user=? AND pwd=?;"
+        self.cursor.execute(sql,(username,password))
+        data=self.cursor.fetchall()  
+        if len(data):
+            return True
+        return False
 
     def resultatRechercheMusiques(nom_musique, groupe, album, annee_sortie, cursor):
         sql="SELECT nom_musique, chemin_fichier FROM musique"
