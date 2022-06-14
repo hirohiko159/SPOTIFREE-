@@ -32,7 +32,7 @@ sous-menu :
 
 *Création d'une BDD: 
   - table user : id (pri), nom_user, pwd, liste_amis
-  - table musique : id (pri), nom_musique, nom_ariste, album, chemin_fichier, année_sortie
+  - table musique : id (pri), nom_musique, nom_ariste, album, chemin_fichier, annee_sortie
   - table musiques_playlist : id (pri), nom_playlist, id_user (foreign), id_musique (foreign), authorized_users 
  
 
