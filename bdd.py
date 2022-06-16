@@ -92,16 +92,18 @@ class Bdd():
                                         """
         self.cursor.execute(sql_recuperation_liste_access,(nom_playlist,))
         data = self.cursor.fetchall()
+        aucun_authorized_users=False
         users_deja_autorises=""
         for line in data:
             if line[0]:
-                print("pas vide")
+                users_deja_autorises = users_deja_autorises + line[0] + "\n"
+            if line[0] is None:
+                aucun_authorized_users=True
             else:
-                print("vide")
-            users_deja_autorises = users_deja_autorises + line[0] + "\n"
-        
+                aucun_authorized_users=False
+
         sql_update_liste_access=""
-        if users_deja_autorises[0] == "":
+        if aucun_authorized_users == False:
             sql_update_liste_access="""
                                         UPDATE musiques_playlist 
                                         SET authorized_users = CONCAT(authorized_users,":",?)
@@ -129,25 +131,29 @@ class Bdd():
     def supprimerAmi(self):
         print()
 
-    def ajouterAmi(self, nom_amis):
-        sql='select liste_amis from user where id=2;'
-        self.cursor.execute(sql,(nom_amis))
+    def ajouterAmi(self, nom_user, nom_amis):
+        sql_recuperation_liste_access="""SELECT liste_amis FROM user WHERE nom_user=?;"""
+        self.cursor.execute(sql_recuperation_liste_access,(nom_user,))
         data = self.cursor.fetchall()
         amis_deja_enregistres=""
+        aucun_ami=False
         for line in data:
-            amis_deja_enregistres=amis_deja_enregistres+ line[0] +"\n"
-            sql_update=""
-        print(amis_deja_enregistres)
-        if amis_deja_enregistres[0] != "":
-            sql_update='UPDATE user SET liste_amis = CONCAT(liste_amis,":", ?) where id=2;'
-        else :
-            sql_update='UPDATE user SET liste_amis = ? where id=2;'
+            if line[0]:
+               amis_deja_enregistres=amis_deja_enregistres+ line[0] +"\n"
+            if line[0] is None:
+                aucun_ami=True
+            else:
+                aucun_ami=False
+        sql_update_liste_access=""
+        if aucun_ami == False:
+            sql_update_liste_access='UPDATE user SET liste_amis = CONCAT(liste_amis,":", ?) where nom_user=?;'
+        else:
+            sql_update_liste_access='UPDATE user SET liste_amis = ? where nom_user=?;'
 
-        self.cursor.execute(sql_update,(nom_amis,))
+        self.cursor.execute(sql_update_liste_access,(nom_amis,nom_user,))
         self.connection.commit()
 
-bdd = Bdd()
-
+#bdd = Bdd()
 # print(bdd.verificationUtilisateur("formation", "formation"))
 # print("")
 # print(bdd.resultatRechercheMusiques(""))
@@ -158,4 +164,5 @@ bdd = Bdd()
 # print("")
 # bdd.supprimerPlaylist("test_toto_2",2)
 # print("")
-bdd.partageAccesPlaylist("test",1,"toto")
+#bdd.partageAccesPlaylist("test",1,"coucou")
+#bdd.ajouterAmi("formation","titututu")
