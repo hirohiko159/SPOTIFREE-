@@ -1,8 +1,5 @@
 import mariadb
 import sys
-import os
-
-os.system('clear')
 
 class Bdd():
     def __init__(self):
@@ -53,7 +50,7 @@ class Bdd():
     
     def resultatListePlaylists(self,nom_user):
         sql="""
-                SELECT nom_playlist,id_user 
+                SELECT DISTINCT nom_playlist,id_user,id_musique
                 FROM musiques_playlist 
                 INNER JOIN user 
                 ON user.id = musiques_playlist.id_user
@@ -63,18 +60,56 @@ class Bdd():
         data = self.cursor.fetchall()
         affichage_complet = ""
         for line in data:
-            affichage_complet = affichage_complet + line[0] + "\n"
+            affichage_complet = affichage_complet + line[0] +  "|" + str(line[1]) + "|" + str(line[2]) + "\n"
         return affichage_complet
+
+    def recupererIdUserDepuisNom(self, nom_user):
+        sql="""
+                SELECT id 
+                FROM user
+                WHERE nom_user=?;
+            """
+        self.cursor.execute(sql, (nom_user,))
+        data = self.cursor.fetchall()
+        return data[0][0]
+    
+    def recupereMusiquesDepuisPlaylist(self, nom_user):
+        listeMusiques = self.resultatListePlaylists(nom_user)
+        id_musiques_a_chercher=[]
+        split = listeMusiques.split("\n")
+        for i in range(0,len(split)- 1):
+            id_musiques_a_chercher.append(split[i].split("|")[2])
+        resultatRechercheMusique=[]
+        for i in range(0,len(id_musiques_a_chercher)):
+            sql="""
+                    SELECT DISTINCT nom_musique,chemin_fichier
+                    FROM musique
+                    WHERE id=?;
+                """
+            self.cursor.execute(sql,(id_musiques_a_chercher[i],))
+            data = self.cursor.fetchall()
+            resultatRechercheMusique.append(data)
+        return resultatRechercheMusique
     
     def ajouterMusiqueAPlaylist(self,nom_playlist,id_user,id_musique):
         sql="""
                 INSERT INTO musiques_playlist 
                     (nom_playlist, id_user, id_musique, authorized_users) 
                 VALUE 
-                    (?,?,?,"");
+                    (?,?,?,NULL);
             """
         self.cursor.execute(sql,(nom_playlist,id_user,id_musique))
         self.connection.commit()
+    
+    def recupererIdMusiqueDepuisNom(self, nom_musique):
+        sql="""
+                SELECT id
+                FROM musique
+                WHERE nom_musique=?;
+            """
+        self.cursor.execute(sql,(nom_musique,))
+        id_musique=self.cursor.fetchall()
+        return id_musique[0][0]
     
     def supprimerPlaylist(self,nom_playlist,id_user):
         sql="""
@@ -153,12 +188,16 @@ class Bdd():
         self.cursor.execute(sql_update_liste_access,(nom_amis,nom_user,))
         self.connection.commit()
 
+    def closeBdd(self):
+        self.connection.close()
+
 #bdd = Bdd()
 # print(bdd.verificationUtilisateur("formation", "formation"))
 # print("")
 # print(bdd.resultatRechercheMusiques(""))
 # print("")
-# print(bdd.resultatListePlaylists("toto"))
+#print(bdd.resultatListePlaylists("formation"))
+#print(bdd.recupereMusiquesDepuisPlaylist("formation"))
 # print("")
 # bdd.ajouterMusiqueAPlaylist("test",1,7)
 # print("")
@@ -166,3 +205,5 @@ class Bdd():
 # print("")
 #bdd.partageAccesPlaylist("test",1,"coucou")
 #bdd.ajouterAmi("formation","titututu")
+#print(bdd.recupererIdMusiqueDepuisNom("'Kutiman - Tanzania.mp3'"))
+#print(bdd.recupererIdUserDepuisNom("formation"))
