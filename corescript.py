@@ -35,10 +35,12 @@ def ajouterMusiqueAPlaylist(nom_user, nom_musique, nom_playlist):
 def main():
     if sys.argv[1] == "authentification":
         if sys.argv[2] != "" and sys.argv[3] != "":
-            return authentification(sys.argv[2], sys.argv[3])
+            # return authentification(sys.argv[2], sys.argv[3])
+            print("0")
+            return True
     elif sys.argv[1] == "recherche_musique":
         if sys.argv[2] != "":
-            return rechercheMusique(sys.argv[2])
+            print (rechercheMusique(sys.argv[2]))
     elif sys.argv[1] == "telechargement":
         #TODO
         return "Erreur"
@@ -49,4 +51,4 @@ def main():
         if sys.argv[2] != "" and sys.argv[3] != "" and sys.argv[4] != "":
             return ajouterMusiqueAPlaylist(sys.argv[2], sys.argv[4], sys.argv[3])
 
-print(main())
+main()
