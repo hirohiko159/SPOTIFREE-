@@ -1,20 +1,15 @@
 #!/usr/bin/env python
 from re import A
-
+import paramiko
 from sys import version
 import random
 import os
 # import bdd
 
-import paramiko
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 client.connect('127.0.0.1', username='daxtors', password='loul')
 reponse=''
-
-
-    
-     
 
 while True:
     print ("############# Bienvenue sur SPOTIFREE #############")
@@ -26,18 +21,16 @@ while True:
         userid=input("Username")
         userpasswd=input("Password")
         commande= 'python3 corescript.py authentification %s %s'%(userid,userpasswd)  
-        stdin, stdout, stderr = client.exec_command('python3 corescript.py authentification username password ')
-        print (stdout.read())
+        stdin, stdout, stderr = client.exec_command(commande)
+        print(stdout.read())
         stdin.close()
-        # ssh spotifree@localhost 
-        # python3 corescript.py authentification username password
-        # response=..
-        stdout.read
+
         if stdout==0:
-            print ("########### Bievenue dans votre espace personelle ########")
+            print ("########### Bievenue dans votre espace personel ########")
             print ("(1)Chercher une musique")
             print ("(2)Playlist")
             print ("(3)Spotifriends")
+
             if reponse in ['1']:
                 print ("\n"*5)
                 print ("veuillez entre un mot clef pour la chanson desirer:")
@@ -45,8 +38,10 @@ while True:
                 print (" que voulez vous faire: a) telecharger la musique vers votre repertoire personnelle")
                 print ("b) ajouter a une playlist")
                 if reponse in ['a']:
+                    print()
                     
                 if reponse in ['b']:
+                    print()
                     
             if reponse in ['2']:
                 print ("\n"*5)
@@ -63,7 +58,7 @@ while True:
         print("mauvais login")
     if reponse in ['2']:
         print ("veuillez saisir un nom d'utilisateur et un mot de passe")
-        # creation_compte
+        #TODO + corescruipt fonction création utilisateur
         
 client.close()    
         
