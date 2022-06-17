@@ -1,6 +1,6 @@
 # Liste des features 
 - Quasiment tout le back-end a été fait et testé (bdd.py fonctionne sans erreur en stand alone, voir commentaires pour plus d'infos)
-- L'utilisateur peut lancer le fichier corescript en se connectant à l'utilisateur "spotifree" ssh
+- L'utilisateur peut lancer le fichier corescript en se connectant à l'utilisateur "spotifree" en ssh
 - L'authentification fonctionne, ainsi que la recherche de musique par mot-clef
 - Base de données MariaDB fonctionnelle
 ---------------------------------------------------------------------------------------------------------------------
