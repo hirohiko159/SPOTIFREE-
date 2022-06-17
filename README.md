@@ -3,6 +3,8 @@
 - L'utilisateur peut lancer le fichier corescript en se connectant à l'utilisateur "spotifree" en ssh
 - L'authentification fonctionne, ainsi que la recherche de musique par mot-clef
 - Base de données MariaDB fonctionnelle
+
+Membres : Cecilia HIRIBARNE, Karima MOHAMAD ALI, Thomas ARRICASTRES, Thibaud RAYGADE, Thomas LEVOLLE
 ---------------------------------------------------------------------------------------------------------------------
 # PLAN SPOTIFREE-
 Création d'une interface utilisateur (.cli lignes de commande)
