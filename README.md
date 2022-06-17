@@ -1,4 +1,10 @@
-# SPOTIFREE-
+# Liste des features 
+- Quasiment tout le back-end a été fait et testé (bdd.py fonctionne sans erreur en stand alone, voir commentaires pour plus d'infos)
+- L'utilisateur peut lancer le fichier corescript en se connectant à l'utilisateur "spotifree" ssh
+- L'authentification fonctionne, ainsi que la recherche de musique par mot-clef
+- Base de données MariaDB fonctionnelle
+---------------------------------------------------------------------------------------------------------------------
+# PLAN SPOTIFREE-
 Création d'une interface utilisateur (.cli lignes de commande)
 Création d'une page connexion : 2 choix : création d'un compte (champs) ou connexion (login, pwd) ==>connexion BDD
 Création du menu : 1/chercher une musique  2/playlist  3/spotifriends
