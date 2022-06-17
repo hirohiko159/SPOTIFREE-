@@ -9,12 +9,17 @@ import random
 import os
 # import bdd
 
+#connection au serveur par SSH
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 client.connect('127.0.0.1', username='spotifree', password='loul')
 reponse=''
 login=False
 
+
+#creation du menu spotifree avec plusieurs choix, on demande a l'utilisateur un nom de compte et un mot de passe, puis on les rentre en argument 
+#pour les envoyer au serveur afin qu'ils soient verifiés, on lit la sortie (stdout), et si les log sont bons cela renvoie un 0,l'utilisateur peut acceder
+#à son compte, où il peut rechercher une musique par mot clef.les autres fonctions n'ont pas pu etre finies par manque de temps.
 print ("############# Bienvenue sur SPOTIFREE #############")
 while login==False:
    
